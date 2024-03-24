@@ -23,7 +23,7 @@ async def insert_restaurant(restaurant: Restaurant):
     return new_restaurant
 
 
-@router.get('/{id}')
+@router.get('/by-id/{id}')
 async def fetch_single_restaurant(id: str):
     single_restaurant = await restaurant_service.fetch_single_restaurant(id)
     return single_restaurant
