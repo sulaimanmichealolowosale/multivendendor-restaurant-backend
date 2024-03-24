@@ -22,7 +22,7 @@ class FoodService:
 
     async def insert_food(self, food: Food):
         try:
-            new_food = await self.collection_name.insert_one(food.dict())
+            new_food = await self.collection_name.insert_one(food.model_dump())
             inserted_food = await self.collection_name.find_one({"_id": new_food.inserted_id})
             return individual_food_serializer(inserted_food)
 

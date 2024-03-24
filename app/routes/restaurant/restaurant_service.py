@@ -23,8 +23,8 @@ class RestaurantService:
         try:
             existing_restaurant = await self.collection_name.find_one({"title": restaurant.title})
             if existing_restaurant:
-                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"A restaurant with title {
-                                    restaurant.title} already exists")
+                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f'''A restaurant with title {
+                                    restaurant.title} already exists''')
             new_restaurant = await self.collection_name.insert_one(restaurant.model_dump())
             inserted_restaurant = await self.collection_name.find_one({"_id": new_restaurant.inserted_id})
             return individual_restaurant_serializer(inserted_restaurant)

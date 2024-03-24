@@ -22,8 +22,8 @@ class CategoryService:
         try:
             existing_category = await self.collection_name.find_one({"title": category.title})
             if existing_category:
-                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"A category with title {
-                                    category.title}already exists")
+                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f'''A category with title {
+                                    category.title}already exists''')
             new_category = await self.collection_name.insert_one(category.model_dump())
             inserted_category = await self.collection_name.find_one({"_id": new_category.inserted_id})
             return individual_category_serializer(inserted_category)
