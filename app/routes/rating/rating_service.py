@@ -20,8 +20,8 @@ class RatingService:
             collection_name = await self.get_collection_name(rating.rating_type)
             product = await collection_name.find_one({"_id": ObjectId(rating.product_id)})
             if not product:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Unknown id : {
-                                    rating.product_id} for {rating.rating_type}")
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'''Unknown id : {
+                                    rating.product_id} for {rating.rating_type}''')
 
             new_rating = await self.collection_name.insert_one(rating.model_dump())
             inserted_rating = await self.collection_name.find_one({"_id": new_rating.inserted_id})
@@ -62,9 +62,9 @@ class RatingService:
                 "rating_type": rating_type,
             })
             if existing_rating:
-                return {"status": True, "message": f"You have already rated this {rating_type}"}
+                return {"status": True, "message": f'''You have already rated this {rating_type}'''}
             else:
-                return {"status": False, "message": f"You are yet to rate this {rating_type}"}
+                return {"status": False, "message": f'''You are yet to rate this {rating_type}'''}
 
         except Exception as e:
             server_error(status.HTTP_404_NOT_FOUND, e)
