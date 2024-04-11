@@ -64,7 +64,7 @@ class AuthService:
 
             new_user = await self.collection_name.insert_one(user.model_dump())
             inserted_user = await self.collection_name.find_one({"_id": new_user.inserted_id})
-            return individual_user_serializer(inserted_user)
+            return individual_user_serializer(inserted_user, "")
 
         except Exception as e:
             server_error(
@@ -100,15 +100,7 @@ class AuthService:
             response.set_cookie("refresh_token", refresh_token, httponly=True)
             response.set_cookie("access_token", access_token, httponly=True)
 
-            # return {
-            #     "message": "Successfully logged in",
-            #     "access_token": access_token,
-            #     "refresh_token": refresh_token
-            # }
-            return {
-                "status": True,
-                "message": "Successfully logged in",
-            }
+            return individual_user_serializer(user, access_token)
 
         except Exception as e:
             server_error(

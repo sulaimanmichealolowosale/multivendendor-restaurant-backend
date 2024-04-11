@@ -62,17 +62,20 @@ def individual_rating_serializer(food) -> dict:
     }
 
 
-def individual_user_serializer(food) -> dict:
+def individual_user_serializer(user, token) -> dict:
     return {
-        'id': str(food['_id']),
-        'username': food['username'],
-        'email': food['email'],
-        'verification': food['verification'],
-        'phone_verification': food['phone_verification'],
-        'address': food['address'],
-        'user_type': food['user_type'],
-        'profile': food['profile'],
-        'created_at': food['created_at'],
+        'id': str(user['_id']),
+        'username': user['username'],
+        'otp': user['otp'],
+        'fcm': user['fcm'],
+        'email': user['email'],
+        'verification': user['verification'],
+        'phone_verification': user['phone_verification'],
+        'address': user['address'],
+        'user_type': user['user_type'],
+        'profile': user['profile'],
+        'access_token': token,
+        'created_at': user['created_at'],
     }
 
 
