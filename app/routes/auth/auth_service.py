@@ -1,6 +1,7 @@
 from datetime import timedelta
 from bson import ObjectId
 from fastapi_mail import FastMail, MessageSchema
+from app.models.auth import Login
 from app.models.user import User
 from app.schemas.schema import individual_user_serializer
 from app.utils.helper_functions import hash_password, define_email_html, conf, verify_password
@@ -70,10 +71,10 @@ class AuthService:
             server_error(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, e=e)
 
-    async def login(self, login_details: OAuth2PasswordRequestForm, response: Response):
+    async def login(self, login_details: Login, response: Response):
         try:
             user = await self.collection_name.find_one(
-                {"email": login_details.username})
+                {"email": login_details.email})
             if not user:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND, detail="Account no found")
@@ -99,7 +100,7 @@ class AuthService:
                 expire_time=timedelta(days=1))
             response.set_cookie("refresh_token", refresh_token, httponly=True)
             response.set_cookie("access_token", access_token, httponly=True)
-
+            # print(login_details)
             return individual_user_serializer(user, access_token)
 
         except Exception as e:
