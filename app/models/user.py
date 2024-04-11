@@ -16,6 +16,7 @@ class User (BaseModel):
     username: str = Field(..., min_length=4, max_length=50)
     email: EmailStr
     otp: str = "none"
+    fcm: str = "none"
     password: str = Field(..., min_length=8, max_length=50)
     phone: str = "0123456789"
     verification: bool = False
