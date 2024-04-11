@@ -23,7 +23,7 @@ class User (BaseModel):
     address: Optional[str]
     user_type: str = UserTypeEnum.client.value
     profile: str = "https://raw.githubusercontent.com/sulaimanmichealolowosale/student_housing/main/user_media/image.jpg"
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.now)
 
     @validator("address")
     def validate_address(cls, value):

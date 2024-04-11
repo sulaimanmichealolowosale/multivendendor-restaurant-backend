@@ -67,7 +67,6 @@ class AuthService:
             return individual_user_serializer(inserted_user)
 
         except Exception as e:
-            pass
             server_error(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, e=e)
 
@@ -101,10 +100,14 @@ class AuthService:
             response.set_cookie("refresh_token", refresh_token, httponly=True)
             response.set_cookie("access_token", access_token, httponly=True)
 
+            # return {
+            #     "message": "Successfully logged in",
+            #     "access_token": access_token,
+            #     "refresh_token": refresh_token
+            # }
             return {
+                "status": True,
                 "message": "Successfully logged in",
-                "access_token": access_token,
-                "refresh_token": refresh_token
             }
 
         except Exception as e:
