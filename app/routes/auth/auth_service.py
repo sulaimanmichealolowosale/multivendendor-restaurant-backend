@@ -71,10 +71,10 @@ class AuthService:
             server_error(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, e=e)
 
-    async def login(self, login_details: Login, response: Response):
+    async def login(self, login_details: OAuth2PasswordRequestForm, response: Response):
         try:
             user = await self.collection_name.find_one(
-                {"email": login_details.email})
+                {"email": login_details.username})
             if not user:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND, detail="Account no found")

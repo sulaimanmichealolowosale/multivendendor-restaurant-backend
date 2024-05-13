@@ -18,7 +18,7 @@ async def register(user: User):
 
 
 @router.post('/login')
-async def login(response: Response, login_details: Login):
+async def login(response: Response, login_details: OAuth2PasswordRequestForm = Depends()):
     user = await auth_service.login(
         login_details=login_details, response=response)
     return user
